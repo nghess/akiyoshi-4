@@ -36,6 +36,12 @@ jsPsych.plugins["html-button-response"] = (function() {
         array: true,
         description: 'The html of the button. Can create own style.'
       },
+      button_delay: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: 'Button Delay',
+        default: 1,
+        description: 'Set to 0 to eliminate delay'
+      },
       prompt: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Prompt',
@@ -77,8 +83,11 @@ jsPsych.plugins["html-button-response"] = (function() {
 
   plugin.trial = function(display_element, trial) {
 
+
     // display stimulus
     var html = '<div id="jspsych-html-button-response-stimulus">'+trial.stimulus+'</div>';
+    
+
 
     //display buttons
     var buttons = [];
@@ -104,10 +113,15 @@ jsPsych.plugins["html-button-response"] = (function() {
     if (trial.prompt !== null) {
       html += trial.prompt;
     }
-    display_element.innerHTML = html;
 
+    display_element.innerHTML = html;
+        
     // start time
     var start_time = performance.now();
+    //Show Intro Line By Line
+
+    //Show instructions 1 line at a time
+    showDiv(500, 2000, trial.button_delay);
 
     // add event listeners to buttons
     for (var i = 0; i < trial.choices.length; i++) {
@@ -181,8 +195,8 @@ jsPsych.plugins["html-button-response"] = (function() {
         end_trial();
       }, trial.trial_duration);
     }
-
   };
 
   return plugin;
 })();
+

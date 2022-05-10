@@ -1,43 +1,49 @@
 //Highlight Color Shuffler
 var randomColor = '';
 var elements = '';
-    
+
 function colorChange() {
     randomColor = Math.floor(Math.random() * 16777215).toString(16);
     return ' style=color:#' + randomColor + ';>'
 };
 
-/*set prompt function*/
+/*set prompt functions*/
 var prompt_global = ' ';
+var complex = function () { prompt_global = 'Use the slider to indicate how <strong>complex</strong> you find the animation.'; }
+var natural = function () { prompt_global = 'Use the slider to indicate how <strong>natural</strong> you find the animation'; }
+var relaxing = function () { prompt_global = 'Use the slider to indicate how <strong>relaxing</strong> you find the animation'; }
+var appealing = function () { prompt_global = 'Use the slider to indicate how <strong>appealing</strong> you find the animation'; }
+var interesting = function () { prompt_global = 'Use the slider to indicate how <strong>interesting</strong> you find the animation'; }
 
-var complex = function(){prompt_global = 'Use the slider to indicate how <strong>complex</strong> you find the animation.';}
-var natural = function(){prompt_global = 'Use the slider to indicate how <strong>natural</strong> you find the animation';}
-var relaxing = function(){prompt_global = 'Use the slider to indicate how <strong>relaxing</strong> you find the animation';}
-var appealing = function(){prompt_global = 'Use the slider to indicate how <strong>appealing</strong> you find the animation';}
-var interesting = function(){prompt_global = 'Use the slider to indicate how <strong>interesting</strong> you find the animation';}
 
+/*show instructions on div at a time*/
+var showDiv = function (speed, delay, btn_mlt) {
+    $(".intro").first().fadeTo(speed, 1, function showNext() { $(this).next(".intro").delay(delay).fadeTo(speed, 1, showNext) });
+    $(".jspsych-html-button-response-button").delay(((delay*7)+(speed*7))*btn_mlt).fadeTo(1000,1);
+};
+
+/*vars for call-function*/
 var complexPrompt = {
-type: 'call-function',
-func: complex
+    type: 'call-function',
+    func: complex
 }
 
 var relaxingPrompt = {
-type: 'call-function',
-func: relaxing
+    type: 'call-function',
+    func: relaxing
 }
 
 var appealingPrompt = {
-type: 'call-function',
-func: appealing
+    type: 'call-function',
+    func: appealing
 }
 
 var interestPrompt = {
-type: 'call-function',
-func: interesting
+    type: 'call-function',
+    func: interesting
 }
 
 var naturalPrompt = {
-type: 'call-function',
-func: natural
+    type: 'call-function',
+    func: natural
 }
-
