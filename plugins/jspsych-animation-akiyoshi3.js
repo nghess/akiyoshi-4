@@ -235,21 +235,19 @@ jsPsych.plugins.animation = (function () {
 
     function setBubble(range, bubble) {
       bubble.innerHTML = Math.round(slide_val) / 100;
-      //bubble.style.left = slide_val + '%';
-
       const newVal = Number(slide_val);
-    
       // Sorta magic numbers based on size of the native UI thumb
       bubble.style.left = `calc(${slide_val}% + (${8 - slide_val * 0.15}px))`;
+      //bubble.style.left = slide_val + '%';
     }
 
     //Show and Hide value on Hover
-    $( ".jspsych-slider" ).mouseenter(function() {
+    $( ".jspsych-slider" ).click(function() {
       $( ".bubble" ).fadeIn( "fast", "linear" );
     });
-    $( ".jspsych-slider" ).mouseleave(function() {
-      $( ".bubble" ).fadeOut( "fast", "linear" );
-    });
+    //$( ".jspsych-slider" ).mouseleave(function() {
+    //  $( ".bubble" ).delay(1000).fadeOut( "fast", "linear" );
+    //});
 
 
     //Slider hover functionality

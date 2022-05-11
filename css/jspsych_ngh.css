@@ -253,12 +253,14 @@ strong {
   transform: translateX(-50%);
   z-index: 1;
   font-size: 80%;
+  color: #333;
 }
 .bubble::after {
   content: "";
   position: absolute;
   bottom: 15px;
   z-index: 1;
+  color: #333;
 }
 
 
