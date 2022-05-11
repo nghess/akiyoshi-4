@@ -12,7 +12,7 @@ var	complex_text = '<div class="intro">You are going to see a series of animatio
 	complex_text += '<div class="intro">1 = Most Complex<br><br></div>'
 	complex_text += '<div class="intro">Remember to use the <strong><em>entire range</em></strong> of the slider to make your ratings.<br></div>'
 	complex_text += '<div class="intro">Please <strong><em>take your time</em></strong> and carefully consider each rating you make.<br><br></div>'	
-	complex_text += '<div class="intro">The study will take approximately 1 hour to complete.<br><br></div>'
+	complex_text += '<div class="intro">The study has five parts, and should take about 45 minutes to complete.<br><br></div>'
 
 var interest_text = '<div class="intro">You are about to view a new series of animations.<br><br></div>'
 	interest_text += '<div class="intro">You will evaluate them based on a different descriptor.<br><br></div>'
