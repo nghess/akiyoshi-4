@@ -241,15 +241,28 @@ strong {
 }
 
 /*slider value reporter*/
-.report {
-  position: fixed;
-  bottom: 50px;
-  right: 50px;
+
+
+.range {
+  width: 100%;
+}
+.bubble {
+  padding: 4px 12px;
+  position: absolute;
+  bottom: 15px;
+  transform: translateX(-50%);
+  z-index: 1;
+  font-size: 80%;
+}
+.bubble::after {
+  content: "";
+  position: absolute;
+  bottom: 15px;
+  z-index: 1;
 }
 
 
 /* jsPsych progress bar */
-
 #jspsych-progressbar-container {
   color: #555;
   border-bottom: 1px solid #dedede;

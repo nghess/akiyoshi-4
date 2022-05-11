@@ -5,7 +5,7 @@
  * documentation: docs.jspsych.org
  */
 
-jsPsych.plugins.animation = (function() {
+jsPsych.plugins.animation = (function () {
 
   var plugin = {};
 
@@ -51,9 +51,9 @@ jsPsych.plugins.animation = (function() {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Render on canvas',
         default: false,
-        description: 'If true, the images will be drawn onto a canvas element (prevents blank screen between consecutive images in some browsers).'+
+        description: 'If true, the images will be drawn onto a canvas element (prevents blank screen between consecutive images in some browsers).' +
           'If false, the image will be shown via an img element.'
-        },
+      },
 
       //Slider Properties
       min: {
@@ -82,15 +82,15 @@ jsPsych.plugins.animation = (function() {
       },
       labels: {
         type: jsPsych.plugins.parameterType.HTML_STRING,
-        pretty_name:'Labels',
-        default: [0,1],
+        pretty_name: 'Labels',
+        default: [0, 1],
         array: true,
         description: 'Labels of the slider.',
       },
       button_label: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Button label',
-        default:  'Continue',
+        default: 'Continue',
         array: false,
         description: 'Label of the button to advance.'
       },
@@ -98,7 +98,8 @@ jsPsych.plugins.animation = (function() {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Require movement',
         default: true,
-        description: 'If true, the participant will have to move the slider before continuing.'},
+        description: 'If true, the participant will have to move the slider before continuing.'
+      },
       response_ends_trial: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Response ends trial',
@@ -109,31 +110,33 @@ jsPsych.plugins.animation = (function() {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Response allowed while playing',
         default: true,
-        description: 'If true, then responses are allowed while the video is playing. '+
-          'If false, then the video must finish playing before a response is accepted.'},
+        description: 'If true, then responses are allowed while the video is playing. ' +
+          'If false, then the video must finish playing before a response is accepted.'
+      },
       slider_timer: {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: 'Slider Timer',
         default: 5000,
-        description: 'Delay appearance of slider at beginning of animation'},
-      }
+        description: 'Delay appearance of slider at beginning of animation'
+      },
     }
-  
-
-  plugin.trial = function(display_element, trial) {
+  }
 
 
-//Set start frame/still frame
-var animate_frame = getRandomInt(trial.stimuli.length-1);
-var baseDiv = '<img id="animation" class="animation" src="'+trial.stimuli[animate_frame]+'"/>';
-display_element.innerHTML = baseDiv;
+  plugin.trial = function (display_element, trial) {
+
+
+    //Set start frame/still frame
+    var animate_frame = getRandomInt(trial.stimuli.length - 1);
+    var baseDiv = '<img id="animation" class="animation" src="' + trial.stimuli[animate_frame] + '"/>';
+    display_element.innerHTML = baseDiv;
 
     // half of the thumb width value from jspsych.css, used to adjust the label positions
-    var half_thumb_width = 7.5; 
+    var half_thumb_width = 7.5;
 
     function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
+      return Math.floor(Math.random() * Math.floor(max));
+    }
 
     // Original Animation Plugin Vars
     var interval_time = trial.frame_time;
@@ -156,62 +159,62 @@ display_element.innerHTML = baseDiv;
     var baseTime = performance.now();
 
 
-// 'step' function will be called each time browser rerender the content
-// we achieve that by passing 'step' as a parameter to the 'requestAnimationFrame' function
-function stepper(startTime) {
-// 'startTime' is provided by requestAnimationName function, and we can consider it as current time
-// first of all we calculate how much time has passed from the last time when frame was update
-  
-  if (!timeWhenLastUpdate) timeWhenLastUpdate = startTime;
-  timeFromLastUpdate = startTime - timeWhenLastUpdate;
+    // 'step' function will be called each time browser rerender the content
+    // we achieve that by passing 'step' as a parameter to the 'requestAnimationFrame' function
+    function stepper(startTime) {
+      // 'startTime' is provided by requestAnimationName function, and we can consider it as current time
+      // first of all we calculate how much time has passed from the last time when frame was update
 
-  // then we check if it is time to update the frame
-  if (timeFromLastUpdate > interval_time) {
-    //console.log(timeFromLastUpdate);
-    // and update it accordingly
-    $element.setAttribute("src", trial.stimuli[animate_frame]);
-    // reset the last update time
-    timeWhenLastUpdate = startTime;
-    // then increase the frame number or reset it if it is the last frame
-    if (animate_frame == totalFrames-1) {
-      animate_frame = 0;
-      reps++;
-    } else {
-      animate_frame++;
+      if (!timeWhenLastUpdate) timeWhenLastUpdate = startTime;
+      timeFromLastUpdate = startTime - timeWhenLastUpdate;
+
+      // then we check if it is time to update the frame
+      if (timeFromLastUpdate > interval_time) {
+        //console.log(timeFromLastUpdate);
+        // and update it accordingly
+        $element.setAttribute("src", trial.stimuli[animate_frame]);
+        // reset the last update time
+        timeWhenLastUpdate = startTime;
+        // then increase the frame number or reset it if it is the last frame
+        if (animate_frame == totalFrames - 1) {
+          animate_frame = 0;
+          reps++;
+        } else {
+          animate_frame++;
+        }
+      }
+      requestAnimationFrame(stepper);
     }
-  }
-  requestAnimationFrame(stepper);
-}
-// Run the animation
-requestAnimationFrame(stepper); 
+    // Run the animation
+    requestAnimationFrame(stepper);
 
-// Slider
+    // Slider
     var html = '<div id="jspsych-slider-response-wrapper" style="margin: 2em 0px;">';
     html += '<div class="jspsych-slider-response-container">';
-
-    html += '<input type="range" class="jspsych-slider" value="'+trial.slider_start+'" min="'+trial.min+'" max="'+trial.max+'" step="'+trial.step+'" id="jspsych-video-slider-response-response"';
+    html += '<output class="bubble"></output>'
+    html += '<input type="range" class="jspsych-slider" value="' + trial.slider_start + '" min="' + trial.min + '" max="' + trial.max + '" step="' + trial.step + '" id="jspsych-video-slider-response-response"';
     if (!trial.response_allowed_while_playing) {
       html += ' disabled';
     }
     html += '></input><div>'
-    for(var j=0; j < trial.labels.length; j++){
-      var label_width_perc = 100/(trial.labels.length-1);
-      var percent_of_range = j * (100/(trial.labels.length - 1));
-      var percent_dist_from_center = ((percent_of_range-50)/50)*100;
-      var offset = (percent_dist_from_center * half_thumb_width)/100;
-      html += '<div style="border: 1px solid transparent; display: inline-block; position: absolute; '+
-        'left:calc('+percent_of_range+'% - ('+label_width_perc+'% / 2) - '+offset+'px); text-align: center; width: '+label_width_perc+'%;">';
-      html += '<span style="text-align: center; font-size: 80%;">'+trial.labels[j]+'</span>';
+    for (var j = 0; j < trial.labels.length; j++) {
+      var label_width_perc = 100 / (trial.labels.length - 1);
+      var percent_of_range = j * (100 / (trial.labels.length - 1));
+      var percent_dist_from_center = ((percent_of_range - 50) / 50) * 100;
+      var offset = (percent_dist_from_center * half_thumb_width) / 100;
+      html += '<div style="border: 1px solid transparent; display: inline-block; position: absolute; ' +
+        'left:calc(' + percent_of_range + '% - (' + label_width_perc + '% / 2) - ' + offset + 'px); text-align: center; width: ' + label_width_perc + '%;">';
+      html += '<span style="text-align: center; font-size: 80%;">' + trial.labels[j] + '</span>';
       html += '</div>'
     }
     html += '</div>';
     html += '</div>';
     html += '</div>';
 
-if(trial.frame_time == 16.66){fps = 60}
+    if (trial.frame_time == 16.66) { fps = 60 }
     // add prompt if there is one
     if (trial.prompt !== null) {
-      html += '<div>'+prompt_global+'</div><br>';
+      html += '<div>' + prompt_global + '</div><br>';
     }
 
     // add submit button
@@ -221,45 +224,67 @@ if(trial.frame_time == 16.66){fps = 60}
     } else {
       next_disabled_attribute = ""
     }
-    html += '<button id="jspsych-video-slider-response-next" class="jspsych-btn" '+ next_disabled_attribute + '>' + trial.button_label + '</button>';
+    html += '<button id="jspsych-video-slider-response-next" class="jspsych-btn" ' + next_disabled_attribute + '>' + trial.button_label + '</button>';
 
     //render html to body
     display_element.insertAdjacentHTML('beforeEnd', html);
 
+    //Value Readout
+    const range = document.querySelector(".jspsych-slider");
+    const bubble = document.querySelector(".bubble");
 
-//Slider hover functionality
+    function setBubble(range, bubble) {
+      bubble.innerHTML = Math.round(slide_val) / 100;
+      //bubble.style.left = slide_val + '%';
 
-var slide_val = 0;
-var valueHover = 0;
+      const newVal = Number(slide_val);
+    
+      // Sorta magic numbers based on size of the native UI thumb
+      bubble.style.left = `calc(${slide_val}% + (${8 - slide_val * 0.15}px))`;
+    }
 
-function calcSliderPos(e) {
-    return (e.offsetX / e.target.clientWidth) *  parseInt(e.target.getAttribute('max'),10);
-}
+    //Show and Hide value on Hover
+    $( ".jspsych-slider" ).mouseenter(function() {
+      $( ".bubble" ).fadeIn( "fast", "linear" );
+    });
+    $( ".jspsych-slider" ).mouseleave(function() {
+      $( ".bubble" ).fadeOut( "fast", "linear" );
+    });
 
-function hover(e) {
-  valueHover = calcSliderPos(e).toFixed(2);
-  this.value = valueHover;
-  slide_val = valueHover;
-};
 
-document.getElementById('jspsych-video-slider-response-response').addEventListener('mousemove', hover)
+    //Slider hover functionality
+    var slide_val = 0;
+    var valueHover = 0;
 
-// slider functionality
-document.querySelector('#jspsych-video-slider-response-response').addEventListener('input', function () {
-slide_val = parseInt(this.value);
-//document.getElementById('jspsych-video-slider-response-response').innerHTML += '<div class = jspsych-video-slider>' + slide_val + '</div>';
-//rating = slide_val
-});
+    function calcSliderPos(e) {
+      return (e.offsetX / e.target.clientWidth) * parseInt(e.target.getAttribute('max'), 10);
+    }
 
-if(trial.require_movement){
-  display_element.querySelector('#jspsych-video-slider-response-response').addEventListener('click', function(){
-  display_element.querySelector('#jspsych-video-slider-response-next').disabled = false;
-  document.getElementById('jspsych-video-slider-response-response').removeEventListener('mousemove', hover);
-  rating = slide_val
-  console.log(rating);
+    function hover(e) {
+      valueHover = calcSliderPos(e).toFixed(2);
+      this.value = valueHover;
+      slide_val = valueHover;
+      setBubble(range, bubble);
+    };
 
-  });   
-}
+    document.getElementById('jspsych-video-slider-response-response').addEventListener('mousemove', hover)
+
+
+    // slider functionality
+    document.querySelector('#jspsych-video-slider-response-response').addEventListener('input', function () {
+      slide_val = parseInt(this.value);
+      setBubble(range, bubble);
+      //rating = slide_val
+    });
+
+    if (trial.require_movement) {
+      display_element.querySelector('#jspsych-video-slider-response-response').addEventListener('click', function () {
+        display_element.querySelector('#jspsych-video-slider-response-next').disabled = false;
+        document.getElementById('jspsych-video-slider-response-response').removeEventListener('mousemove', hover);
+        rating = slide_val
+        console.log(rating);
+      });
+    }
 
 
 
@@ -268,13 +293,13 @@ if(trial.require_movement){
     var start_time = performance.now();
 
     // end trial on button click
-    display_element.querySelector('#jspsych-video-slider-response-next').addEventListener('click', function() {
-    display_element.innerHTML = "";
-    // measure rt
-    endTrial();
+    display_element.querySelector('#jspsych-video-slider-response-next').addEventListener('click', function () {
+      display_element.innerHTML = "";
+      // measure rt
+      endTrial();
     });
 
-    var after_response = function(info) {
+    var after_response = function (info) {
 
       responses.push({
         key_press: info.key,
@@ -299,10 +324,10 @@ if(trial.require_movement){
     });
 
     function endTrial() {
-    display_element.innerHTML = "";
+      display_element.innerHTML = "";
       var end_time = performance.now();
       var rt = end_time - start_time;
-      
+
       jsPsych.pluginAPI.cancelKeyboardResponse(response_listener);
 
       var trial_data = {
