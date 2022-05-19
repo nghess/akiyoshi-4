@@ -18,7 +18,7 @@ var interesting = function () { prompt_global = 'Use the slider to indicate how 
 
 /*show instructions on div at a time*/
 var showDiv = function (speed, delay, btn_mlt) {
-    $(".complex").fadeTo("slow",1)
+    $(".complex").fadeTo(1500, 1);
     $(".intro").first().fadeTo(speed, 1, function showNext() { $(this).next(".intro").delay(delay).fadeTo(speed, 1, showNext) });
     $(".jspsych-html-button-response-button").delay(((delay*7)+(speed*7))*btn_mlt).fadeTo(1000,1);
 };
