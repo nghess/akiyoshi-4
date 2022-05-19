@@ -19,7 +19,17 @@ strong {
   color:  #bfbfbf;
 }
 
-/*Custom Styling*/
+.intro {
+  opacity: 0;
+}
+
+.complex {
+  opacity: 0;
+}
+
+.jspsych-html-button-response-button {
+  opacity: 0;
+}
 
  .animation {
   max-width: 100%;
