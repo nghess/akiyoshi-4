@@ -1,2 +1,2 @@
 # Akiyoshi III
-dynamic fractals experiment
+Dynamic fractals experiment using jsPsych.
