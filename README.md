@@ -1,2 +1,2 @@
 # Akiyoshi III
-Code for dynamic fractals experiment.
+dynamic fractals experiment
