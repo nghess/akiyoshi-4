@@ -6,7 +6,7 @@ var debrief_text = '<strong>Study Debriefing</strong><br>'
 	debrief_text += '<p class="debrief"><strong>Feedback and Further information:</strong> If you have additional questions about this study, please feel free to ask the researcher, Nathan Gonzales-Hess at nhess @ uoregon.edu. If you have any questions concerning your rights as a research participant, please contact Research Compliance Services, 5237 University of Oregon, Eugene, OR 97403, 541-346-2510, or email researchCompliance @ uoregon.edu. You can also email the Human Subjects Coordinator for psychology and linguistics research at hscoord @ uoregon.edu. '
 
 //Dynamic Prompts
-var	complex_text = '<div class="complex">You are going to see a series of animations.<br><br></div>'
+var complex_text = '<div class="complex">You are going to see a series of animations.<br><br></div>'
 	complex_text += '<div class="complex">Move the slider to indicate how <strong style="text-transform:capitalize">COMPLEX</strong> you find each animation.<br><br></div>'
 	complex_text +=	'<div class="complex">0 = Least Complex<br></div>'
 	complex_text += '<div class="complex">1 = Most Complex<br><br></div>'
