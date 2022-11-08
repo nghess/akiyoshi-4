@@ -1,5 +1,0 @@
-[X] make sure blocks/prompts work
-[X] make sure block/prompt is saving in csv
-[x] color change - works but opted not to use
-[] maybe a delay on instructions
-[] readout of rating
