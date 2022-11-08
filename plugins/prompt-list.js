@@ -15,7 +15,8 @@ var train_text = '<strong>TRAINING</strong><br><br>'
 	train_text += '<div class="complex"><strong><em>Take your time</em></strong> and carefully consider each rating you make.<br><br></div>'	
 
 //Dynamic Prompts
-var complex_text_gs = '<div class="complex">You will now see a series of <strong>grayscale</strong> animations.<br><br></div>'
+var complex_text_gs = '<strong>BLOCK 1 OF 2</strong><br><br>'
+	complex_text_gs += '<div class="complex">You will now see a series of <strong>grayscale</strong> animations.<br><br></div>'
 	complex_text_gs += '<div class="complex">Move the slider to indicate how <strong style="text-transform:capitalize">COMPLEX</strong> you find each animation.<br><br></div>'
 	complex_text_gs += '<div class="complex">0 = Least Complex<br></div>'
 	complex_text_gs += '<div class="complex">1 = Most Complex<br><br></div>'
@@ -24,7 +25,8 @@ var complex_text_gs = '<div class="complex">You will now see a series of <strong
 
 
 //Dynamic Prompts
-var complex_text_bw = '<div class="complex">You will now see a series of <strong>black and white</strong> animations.<br><br></div>'
+var complex_text_bw = '<strong>BLOCK 2 OF 2</strong><br><br>'
+	complex_text_bw += '<div class="complex">You will now see a series of <strong>black and white</strong> animations.<br><br></div>'
 	complex_text_bw += '<div class="complex">Move the slider to indicate how <strong style="text-transform:capitalize">COMPLEX</strong> you find each animation.<br><br></div>'
 	complex_text_bw +=	'<div class="complex">0 = Least Complex<br></div>'
 	complex_text_bw += '<div class="complex">1 = Most Complex<br><br></div>'
