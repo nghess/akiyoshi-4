@@ -12,13 +12,14 @@
   <script src="plugins/jspsych-external-html.js"></script>
   <script src="plugins/jspsych-html-button-response.js"></script>
   <script src="plugins/jspsych-survey-html-form.js"></script>
-  <script src="plugins/jspsych-animation-akiyoshi3.js"></script>
+  <script src="plugins/jspsych-animation-df2.js"></script>
   <!--anim slider plugin-->
-  <script src="plugins/dynamic-fractals-akiyoshi3.js"></script>
+  <script src="plugins/dynamic-fractals-akiyoshi4.js"></script>
   <!--lists from local images-->
-  <script src="plugins/stimuli-list-akiyoshi3.js"></script>
-  <script src="plugins/jspsych-preload.js"></script>
-  <script src="plugins/preload-sequence.js"></script>
+  <script src="plugins/stimuli-list-bw.js"></script>
+  <script src="plugins/stimuli-list-gs.js"></script>
+  <script src="plugins/jspsych-preload.js"></script> <!--old -->
+  <script src="plugins/preload-sequence.js"></script> <!--old -->
   <!--stimuli preload sequence-->
   <link rel="stylesheet" href="css/jspsych_ngh.css">
 </head>
@@ -95,30 +96,23 @@
     button_delay: .4, 
   }
 
-  /*block shuffler*/
-  var block = [complexBlock_bw, appealingBlock];
-  var prmpt = [complexPrompt_bw, complexPrompt_bw];
   /*trial shuffler*/
-  var dyn_bw = [s117_b25_s1, s117_b25_s2, s117_b25_s3, s117_b25_s4, s117_b25_s5,
-    s117_b35_s1, s117_b35_s2, s117_b35_s3, s117_b35_s4, s117_b35_s5,
-    s117_b40_s1, s117_b40_s2, s117_b40_s3, s117_b40_s4, s117_b40_s5,
-    s117_b45_s1, s117_b45_s2, s117_b45_s3, s117_b45_s4, s117_b45_s5,
-    s117_b55_s1, s117_b55_s2, s117_b55_s3, s117_b55_s4, s117_b55_s5,
-    s238_b25_s1, s238_b25_s2, s238_b25_s3, s238_b25_s4, s238_b25_s5,
-    s238_b35_s1, s238_b35_s2, s238_b35_s3, s238_b35_s4, s238_b35_s5,
-    s238_b40_s1, s238_b40_s2, s238_b40_s3, s238_b40_s4, s238_b40_s5,
-    s238_b45_s1, s238_b45_s2, s238_b45_s3, s238_b45_s4, s238_b45_s5,
-    s238_b55_s1, s238_b55_s2, s238_b55_s3, s238_b55_s4, s238_b55_s5,
-    s314_b25_s1, s314_b25_s2, s314_b25_s3, s314_b25_s4, s314_b25_s5,
-    s314_b35_s1, s314_b35_s2, s314_b35_s3, s314_b35_s4, s314_b35_s5,
-    s314_b40_s1, s314_b40_s2, s314_b40_s3, s314_b40_s4, s314_b40_s5,
-    s314_b45_s1, s314_b45_s2, s314_b45_s3, s314_b45_s4, s314_b45_s5,
-    s314_b55_s1, s314_b55_s2, s314_b55_s3, s314_b55_s4, s314_b55_s5,];
-  //Array = [1:75]
-  var num = [...Array(75).keys()];
-  var cnd = [0, 1];
-  //Shufflers for Descriptors and Prompts
-  blk = jsPsych.randomization.repeat(cnd, 1)
+  var dyn_gs = [ss_7_25_30_gs, ss_7_30_30_gs, ss_7_35_30_gs, ss_7_40_30_gs, ss_7_45_30_gs, ss_7_50_30_gs, ss_7_55_30_gs, 
+            ss_8_25_30_gs, ss_8_30_30_gs, ss_8_35_30_gs, ss_8_40_30_gs, ss_8_45_30_gs, ss_8_50_30_gs, ss_8_55_30_gs, 
+            ss_9_25_30_gs, ss_9_30_30_gs, ss_9_35_30_gs, ss_9_40_30_gs, ss_9_45_30_gs, ss_9_50_30_gs, ss_9_55_30_gs, 
+            ss_7_25_60_gs, ss_7_30_60_gs, ss_7_35_60_gs, ss_7_40_60_gs, ss_7_45_60_gs, ss_7_50_60_gs, ss_7_55_60_gs, 
+            ss_8_25_60_gs, ss_8_30_60_gs, ss_8_35_60_gs, ss_8_40_60_gs, ss_8_45_60_gs, ss_8_50_60_gs, ss_8_55_60_gs, 
+            ss_9_25_60_gs, ss_9_30_60_gs, ss_9_35_60_gs, ss_9_40_60_gs, ss_9_45_60_gs, ss_9_50_60_gs, ss_9_55_60_gs]
+
+  var dyn_bw = [ss_7_25_30_bw, ss_7_30_30_bw, ss_7_35_30_bw, ss_7_40_30_bw, ss_7_45_30_bw, ss_7_50_30_bw, ss_7_55_30_bw, 
+            ss_8_25_30_bw, ss_8_30_30_bw, ss_8_35_30_bw, ss_8_40_30_bw, ss_8_45_30_bw, ss_8_50_30_bw, ss_8_55_30_bw, 
+            ss_9_25_30_bw, ss_9_30_30_bw, ss_9_35_30_bw, ss_9_40_30_bw, ss_9_45_30_bw, ss_9_50_30_bw, ss_9_55_30_bw, 
+            ss_7_25_60_bw, ss_7_30_60_bw, ss_7_35_60_bw, ss_7_40_60_bw, ss_7_45_60_bw, ss_7_50_60_bw, ss_7_55_60_bw, 
+            ss_8_25_60_bw, ss_8_30_60_bw, ss_8_35_60_bw, ss_8_40_60_bw, ss_8_45_60_bw, ss_8_50_60_bw, ss_8_55_60_bw, 
+            ss_9_25_60_bw, ss_9_30_60_bw, ss_9_35_60_bw, ss_9_40_60_bw, ss_9_45_60_bw, ss_9_50_60_bw, ss_9_55_60_bw]
+
+  //Array = [1:42]
+  var num = [...Array(42).keys()];
   //Shufflers for 75 trial lists
   n1 = jsPsych.randomization.repeat(num, 1)
   n2 = jsPsych.randomization.repeat(num, 1)
@@ -131,32 +125,31 @@
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify({ filedata: data }));
   }
-
-
+complexPrompt
   /*timeline*/
   jsPsych.init({
     //default_iti: 500,
     timeline: [//informed_consent,
-      preload_1, preload_2, preload_3,
+      preload_bw1, preload_bw2, preload_bw3, preload_gs1, preload_gs2, preload_gs3,
       //userID, 
       fullscreen_enter, ageGender,
-      block[blk[0]], prmpt[blk[0]], //Complex block 1
-      dyn_bw[n1[0]], dyn_bw[n1[1]], dyn_bw[n1[2]], dyn_bw[n1[3]], dyn_bw[n1[4]],
-      dyn_bw[n1[5]], dyn_bw[n1[6]], dyn_bw[n1[7]], dyn_bw[n1[8]], dyn_bw[n1[9]],
-      dyn_bw[n1[10]], dyn_bw[n1[11]], dyn_bw[n1[12]], dyn_bw[n1[13]], dyn_bw[n1[14]],
-      dyn_bw[n1[15]], dyn_bw[n1[16]], dyn_bw[n1[17]], dyn_bw[n1[18]], dyn_bw[n1[19]],
-      dyn_bw[n1[20]], dyn_bw[n1[21]], dyn_bw[n1[22]], dyn_bw[n1[23]], dyn_bw[n1[24]],
-      dyn_bw[n1[25]], dyn_bw[n1[26]], dyn_bw[n1[27]], dyn_bw[n1[28]], dyn_bw[n1[29]],
-      dyn_bw[n1[30]], dyn_bw[n1[31]], dyn_bw[n1[32]], dyn_bw[n1[33]], dyn_bw[n1[34]],
-      dyn_bw[n1[35]], dyn_bw[n1[36]], dyn_bw[n1[37]], dyn_bw[n1[38]], dyn_bw[n1[39]],
-      dyn_bw[n1[40]], dyn_bw[n1[41]], dyn_bw[n1[42]], dyn_bw[n1[43]], dyn_bw[n1[44]],
-      dyn_bw[n1[45]], dyn_bw[n1[46]], dyn_bw[n1[47]], dyn_bw[n1[48]], dyn_bw[n1[49]],
-      dyn_bw[n1[50]], dyn_bw[n1[51]], dyn_bw[n1[52]], dyn_bw[n1[53]], dyn_bw[n1[54]],
-      dyn_bw[n1[55]], dyn_bw[n1[56]], dyn_bw[n1[57]], dyn_bw[n1[58]], dyn_bw[n1[59]],
-      dyn_bw[n1[60]], dyn_bw[n1[61]], dyn_bw[n1[62]], dyn_bw[n1[63]], dyn_bw[n1[64]],
-      dyn_bw[n1[65]], dyn_bw[n1[66]], dyn_bw[n1[67]], dyn_bw[n1[68]], dyn_bw[n1[69]],
-      dyn_bw[n1[70]], dyn_bw[n1[71]], dyn_bw[n1[72]], dyn_bw[n1[73]], dyn_bw[n1[74]],  
-      block[blk[1]], prmpt[blk[1]], //Complex block 2
+      complexBlock_gs, complexPrompt, //Complex block GS
+      dyn_gs[n1[0]], dyn_gs[n1[1]], dyn_gs[n1[2]], dyn_gs[n1[3]], dyn_gs[n1[4]],
+      dyn_gs[n1[5]], dyn_gs[n1[6]], dyn_gs[n1[7]], dyn_gs[n1[8]], dyn_gs[n1[9]],
+      dyn_gs[n1[10]], dyn_gs[n1[11]], dyn_gs[n1[12]], dyn_gs[n1[13]], dyn_gs[n1[14]],
+      dyn_gs[n1[15]], dyn_gs[n1[16]], dyn_gs[n1[17]], dyn_gs[n1[18]], dyn_gs[n1[19]],
+      dyn_gs[n1[20]], dyn_gs[n1[21]], dyn_gs[n1[22]], dyn_gs[n1[23]], dyn_gs[n1[24]],
+      dyn_gs[n1[25]], dyn_gs[n1[26]], dyn_gs[n1[27]], dyn_gs[n1[28]], dyn_gs[n1[29]],
+      dyn_gs[n1[30]], dyn_gs[n1[31]], dyn_gs[n1[32]], dyn_gs[n1[33]], dyn_gs[n1[34]],
+      dyn_gs[n1[35]], dyn_gs[n1[36]], dyn_gs[n1[37]], dyn_gs[n1[38]], dyn_gs[n1[39]],
+      dyn_gs[n1[40]], dyn_gs[n1[41]], dyn_gs[n1[42]], dyn_gs[n1[43]], dyn_gs[n1[44]],
+      dyn_gs[n1[45]], dyn_gs[n1[46]], dyn_gs[n1[47]], dyn_gs[n1[48]], dyn_gs[n1[49]],
+      dyn_gs[n1[50]], dyn_gs[n1[51]], dyn_gs[n1[52]], dyn_gs[n1[53]], dyn_gs[n1[54]],
+      dyn_gs[n1[55]], dyn_gs[n1[56]], dyn_gs[n1[57]], dyn_gs[n1[58]], dyn_gs[n1[59]],
+      dyn_gs[n1[60]], dyn_gs[n1[61]], dyn_gs[n1[62]], dyn_gs[n1[63]], dyn_gs[n1[64]],
+      dyn_gs[n1[65]], dyn_gs[n1[66]], dyn_gs[n1[67]], dyn_gs[n1[68]], dyn_gs[n1[69]],
+      dyn_gs[n1[70]], dyn_gs[n1[71]], dyn_gs[n1[72]], dyn_gs[n1[73]], dyn_gs[n1[74]],  
+      complexBlock_bw, //Complex block BW
       dyn_bw[n2[0]], dyn_bw[n2[1]], dyn_bw[n2[2]], dyn_bw[n2[3]], dyn_bw[n2[4]],
       dyn_bw[n2[5]], dyn_bw[n2[6]], dyn_bw[n2[7]], dyn_bw[n2[8]], dyn_bw[n2[9]],
       dyn_bw[n2[10]], dyn_bw[n2[11]], dyn_bw[n2[12]], dyn_bw[n2[13]], dyn_bw[n2[14]],

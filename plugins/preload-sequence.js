@@ -1,95 +1,83 @@
-var preload_1 = {
-    type: 'preload',
-    message: 'Stimuli Loading...1/3',
-    images: [
-            fractal_s117_b25_s1,
-            fractal_s117_b25_s2,
-            fractal_s117_b25_s3,
-            fractal_s117_b25_s4,
-            fractal_s117_b25_s5,
-            fractal_s117_b35_s1,
-            fractal_s117_b35_s2,
-            fractal_s117_b35_s3,
-            fractal_s117_b35_s4,
-            fractal_s117_b35_s5,
-            fractal_s117_b40_s1,
-            fractal_s117_b40_s2,
-            fractal_s117_b40_s3,
-            fractal_s117_b40_s4,
-            fractal_s117_b40_s5,
-            fractal_s117_b45_s1,
-            fractal_s117_b45_s2,
-            fractal_s117_b45_s3,
-            fractal_s117_b45_s4,
-            fractal_s117_b45_s5,
-            fractal_s117_b55_s1,
-            fractal_s117_b55_s2,
-            fractal_s117_b55_s3,
-            fractal_s117_b55_s4,
-            fractal_s117_b55_s5],
-    auto_preload: false // automatically load all files based on the main timeline
-  };
+var preload_bw1 = {
+type: 'preload',
+message: 'BW Stimuli Loading...',
+images: [
+        fractal_s777_b25_bw,
+        fractal_s777_b30_bw,
+        fractal_s777_b35_bw,
+        fractal_s777_b40_bw,
+        fractal_s777_b45_bw,
+        fractal_s777_b50_bw,
+        fractal_s777_b55_bw],
+auto_preload: false // automatically load all files based on the main timeline
+};
 
-  var preload_2 = {
-    type: 'preload',
-    message: 'Stimuli Loading...2/3',
-    images: [
-            fractal_s238_b25_s1,
-            fractal_s238_b25_s2,
-            fractal_s238_b25_s3,
-            fractal_s238_b25_s4,
-            fractal_s238_b25_s5,
-            fractal_s238_b35_s1,
-            fractal_s238_b35_s2,
-            fractal_s238_b35_s3,
-            fractal_s238_b35_s4,
-            fractal_s238_b35_s5,
-            fractal_s238_b40_s1,
-            fractal_s238_b40_s2,
-            fractal_s238_b40_s3,
-            fractal_s238_b40_s4,
-            fractal_s238_b40_s5,
-            fractal_s238_b45_s1,
-            fractal_s238_b45_s2,
-            fractal_s238_b45_s3,
-            fractal_s238_b45_s4,
-            fractal_s238_b45_s5,
-            fractal_s238_b55_s1,
-            fractal_s238_b55_s2,
-            fractal_s238_b55_s3,
-            fractal_s238_b55_s4,
-            fractal_s238_b55_s5],
-    auto_preload: false // automatically load all files based on the main timeline
-  };
+var preload_bw2 = {
+type: 'preload',
+message: 'BW Stimuli Loading...',
+images: [
+        fractal_s888_b25_bw,
+        fractal_s888_b30_bw,
+        fractal_s888_b35_bw,
+        fractal_s888_b40_bw,
+        fractal_s888_b45_bw,
+        fractal_s888_b50_bw,
+        fractal_s888_b55_bw],
+auto_preload: false // automatically load all files based on the main timeline
+};
 
-  var preload_3 = {
-    type: 'preload',
-    message: 'Stimuli Loading...3/3',
-    images: [
-            fractal_s314_b25_s1,
-            fractal_s314_b25_s2,
-            fractal_s314_b25_s3,
-            fractal_s314_b25_s4,
-            fractal_s314_b25_s5,
-            fractal_s314_b35_s1,
-            fractal_s314_b35_s2,
-            fractal_s314_b35_s3,
-            fractal_s314_b35_s4,
-            fractal_s314_b35_s5,
-            fractal_s314_b40_s1,
-            fractal_s314_b40_s2,
-            fractal_s314_b40_s3,
-            fractal_s314_b40_s4,
-            fractal_s314_b40_s5,
-            fractal_s314_b45_s1,
-            fractal_s314_b45_s2,
-            fractal_s314_b45_s3,
-            fractal_s314_b45_s4,
-            fractal_s314_b45_s5,
-            fractal_s314_b55_s1,
-            fractal_s314_b55_s2,
-            fractal_s314_b55_s3,
-            fractal_s314_b55_s4,
-            fractal_s314_b55_s5],
-    auto_preload: false // automatically load all files based on the main timeline
-  };
+var preload_bw3 = {
+type: 'preload',
+message: 'BW Stimuli Loading...',
+images: [
+        fractal_s999_b25_bw,
+        fractal_s999_b30_bw,
+        fractal_s999_b35_bw,
+        fractal_s999_b40_bw,
+        fractal_s999_b45_bw,
+        fractal_s999_b50_bw,
+        fractal_s999_b55_bw],
+auto_preload: false // automatically load all files based on the main timeline
+};
+
+var preload_gs1 = {
+type: 'preload',
+message: 'GS Stimuli Loading...',
+images: [
+        fractal_s777_b25_gs,
+        fractal_s777_b30_gs,
+        fractal_s777_b35_gs,
+        fractal_s777_b40_gs,
+        fractal_s777_b45_gs,
+        fractal_s777_b50_gs,
+        fractal_s777_b55_gs],
+auto_preload: false // automatically load all files based on the main timeline
+};
+
+var preload_gs2 = {
+type: 'preload',
+message: 'GS Stimuli Loading...',
+images: [
+        fractal_s888_b25_gs,
+        fractal_s888_b30_gs,
+        fractal_s888_b35_gs,
+        fractal_s888_b40_gs,
+        fractal_s888_b45_gs,
+        fractal_s888_b50_gs,
+        fractal_s888_b55_gs],
+auto_preload: false // automatically load all files based on the main timeline
+};
+
+var preload_gs3 = {
+type: 'preload',
+message: 'GS Stimuli Loading...',
+images: [
+        fractal_s999_b25_gs,
+        fractal_s999_b30_gs,
+        fractal_s999_b35_gs,
+        fractal_s999_b40_gs,
+        fractal_s999_b45_gs,
+        fractal_s999_b50_gs,
+        fractal_s999_b55_gs],
+auto_preload: false // automatically load all files based on the main timeline
+};
