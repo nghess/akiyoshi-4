@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="plugins/jspsych.js"></script>
+  <script src="plugins/jspsych-preload.js"></script>
+  <script src="plugins/jspsych-pavlovia-3.0.0.js"></script> <!--pavlovia plugin-->
+  <script src="plugins/set-prompts.js"></script> <!--set prompts function--> 
+  <script src="plugins/jspsych-fullscreen.js"></script>
+  <script src="plugins/jspsych-external-html.js"></script>
+  <script src="plugins/jspsych-call-function.js"></script>
+  <script src="plugins/jspsych-animation-df2.js"></script> <!--anim slider plugin-->
+  <script src="plugins/jspsych-html-button-response.js"></script>
+  <script src="plugins/jspsych-survey-html-form.js"></script> 
+  <script src="plugins/dynamic-fractals-offline.js"></script>  <!--lists from local images-->
+  <script src="plugins/stimuli-list-bw.js"></script>
+  <script src="plugins/stimuli-list-gs.js"></script>
+  <script src="plugins/toggle-stimuli.js"></script>
+  <script src="plugins/prompt-list.js"></script>    
+  <link rel="stylesheet" href="css/jspsych_ngh.css">
+</head>
+<body></body>
+<script>
+/*grab screen resolution*/
+var screen_res = screen.width + "x" + screen.height;
+jsPsych.data.addProperties({resolution: screen_res});
+
+/* create timeline */
+var timeline = [];
+
+/* fullscreen and timestamp functions */
+var fullscreen_enter = {
+    type: 'fullscreen',
+    message: 'Click the button below to begin the experiment.<br><br>',
+    fullscreen_mode: true
+}
+var fullscreen_exit = {
+   type: 'fullscreen',
+   fullscreen_mode: false
+}
+
+
+var userID = {
+  type: 'survey-html-form',
+  preamble: '<p>Input Participant ID</p>',
+  html: '<p><input type="text" id="test-resp-box" name="userID" size="10" /></p>',
+  autofocus: 'test-resp-box'
+};
+
+var ageGender = {
+  type: 'survey-html-form',
+  preamble: '<p>Please input your age and gender identity:</p>',
+  html: '<p>Age <input type="number" id="test-resp-box" name="age" style="width: 3em;" /></p><p>Gender <input type="text" id="test-resp-box" name="gender" size="10" /></p>',
+  autofocus: 'test-resp-box'
+};
+
+
+/* consent and intro */
+var introduction = {
+type: 'html-button-response',
+stimulus: '<div style="max-width:600px;"><p>Use the slider to indicate how <strong>complex</strong> the animation looks</p></div>',
+choices: ['Continue']
+}
+//Break
+var leg_stretch = {
+  type: 'html-button-response',
+  stimulus: 'You have reached the midpoint of the study.<br>If you would like, you may take a 2 minute break to stretch and refocus.<br><br>',
+  choices: ['Continue']
+}
+/*debrief and thanks*/
+var debrief = {
+type: 'html-button-response',
+stimulus: debrief_text,
+choices: ['Continue']
+}
+var thanks = {
+  type: 'html-button-response',
+  stimulus: 'Thank you for participating in this study. <br>Please click below to finish the experiment and submit your responses.<br><br>',
+  choices: ['Exit']
+}
+/* block categories */
+var complexBlock = {
+type: 'html-button-response',
+stimulus: complex_text,
+choices: ['Continue']
+}
+var relaxingBlock = {
+type: 'html-button-response',
+stimulus: relaxing_text,
+choices: ['Continue']
+}
+var appealingBlock = {
+type: 'html-button-response',
+stimulus: appealing_text,
+choices: ['Continue']
+}
+var interestBlock = {
+type: 'html-button-response',
+stimulus: interest_text,
+choices: ['Continue']
+}
+var naturalBlock = {
+type: 'html-button-response',
+stimulus: natural_text,
+choices: ['Continue']
+}
+/*still blocks*/
+var complexBlock_stl = {
+type: 'html-button-response',
+stimulus: complex_text_stl,
+choices: ['Continue']
+}
+var relaxingBlock_stl = {
+type: 'html-button-response',
+stimulus: relaxing_text_stl,
+choices: ['Continue']
+}
+var appealingBlock_stl = {
+type: 'html-button-response',
+stimulus: appealing_text_stl,
+choices: ['Continue']
+}
+var interestBlock_stl = {
+type: 'html-button-response',
+stimulus: interest_text_stl,
+choices: ['Continue']
+}
+var naturalBlock_stl = {
+type: 'html-button-response',
+stimulus: natural_text_stl,
+choices: ['Continue']
+}
+
+
+/*trial shuffler*/
+var dyn_gs = [ss_7_25_30_gs, ss_7_30_30_gs, ss_7_35_30_gs, ss_7_40_30_gs, ss_7_45_30_gs, ss_7_50_30_gs, ss_7_55_30_gs, 
+           ss_8_25_30_gs, ss_8_30_30_gs, ss_8_35_30_gs, ss_8_40_30_gs, ss_8_45_30_gs, ss_8_50_30_gs, ss_8_55_30_gs, 
+           ss_9_25_30_gs, ss_9_30_30_gs, ss_9_35_30_gs, ss_9_40_30_gs, ss_9_45_30_gs, ss_9_50_30_gs, ss_9_55_30_gs, 
+           ss_7_25_60_gs, ss_7_30_60_gs, ss_7_35_60_gs, ss_7_40_60_gs, ss_7_45_60_gs, ss_7_50_60_gs, ss_7_55_60_gs, 
+           ss_8_25_60_gs, ss_8_30_60_gs, ss_8_35_60_gs, ss_8_40_60_gs, ss_8_45_60_gs, ss_8_50_60_gs, ss_8_55_60_gs, 
+           ss_9_25_60_gs, ss_9_30_60_gs, ss_9_35_60_gs, ss_9_40_60_gs, ss_9_45_60_gs, ss_9_50_60_gs, ss_9_55_60_gs]
+var stl_gs = [ss_9_25_inf_gs, ss_9_30_inf_gs, ss_9_35_inf_gs, ss_9_40_inf_gs, ss_9_45_inf_gs, ss_9_50_inf_gs, ss_9_55_inf_gs,
+           ss_8_25_inf_gs, ss_8_30_inf_gs, ss_8_35_inf_gs, ss_8_40_inf_gs, ss_8_45_inf_gs, ss_8_50_inf_gs, ss_8_55_inf_gs,
+          ss_7_25_inf_gs, ss_7_30_inf_gs, ss_7_35_inf_gs, ss_7_40_inf_gs, ss_7_45_inf_gs, ss_7_50_inf_gs, ss_7_55_inf_gs]
+
+var dyn_bw = [ss_7_25_30_bw, ss_7_30_30_bw, ss_7_35_30_bw, ss_7_40_30_bw, ss_7_45_30_bw, ss_7_50_30_bw, ss_7_55_30_bw, 
+           ss_8_25_30_bw, ss_8_30_30_bw, ss_8_35_30_bw, ss_8_40_30_bw, ss_8_45_30_bw, ss_8_50_30_bw, ss_8_55_30_bw, 
+           ss_9_25_30_bw, ss_9_30_30_bw, ss_9_35_30_bw, ss_9_40_30_bw, ss_9_45_30_bw, ss_9_50_30_bw, ss_9_55_30_bw, 
+           ss_7_25_60_bw, ss_7_30_60_bw, ss_7_35_60_bw, ss_7_40_60_bw, ss_7_45_60_bw, ss_7_50_60_bw, ss_7_55_60_bw, 
+           ss_8_25_60_bw, ss_8_30_60_bw, ss_8_35_60_bw, ss_8_40_60_bw, ss_8_45_60_bw, ss_8_50_60_bw, ss_8_55_60_bw, 
+           ss_9_25_60_bw, ss_9_30_60_bw, ss_9_35_60_bw, ss_9_40_60_bw, ss_9_45_60_bw, ss_9_50_60_bw, ss_9_55_60_bw]
+var stl_bw = [ss_9_25_inf_bw, ss_9_30_inf_bw, ss_9_35_inf_bw, ss_9_40_inf_bw, ss_9_45_inf_bw, ss_9_50_inf_bw, ss_9_55_inf_bw,
+           ss_8_25_inf_bw, ss_8_30_inf_bw, ss_8_35_inf_bw, ss_8_40_inf_bw, ss_8_45_inf_bw, ss_8_50_inf_bw, ss_8_55_inf_bw,
+          ss_7_25_inf_bw, ss_7_30_inf_bw, ss_7_35_inf_bw, ss_7_40_inf_bw, ss_7_45_inf_bw, ss_7_50_inf_bw, ss_7_55_inf_bw]
+
+var num = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,
+           23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41];
+var num2 = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+
+//Shufflers for 42 trial blocks
+n1 = jsPsych.randomization.repeat(num, 1)
+n2 = jsPsych.randomization.repeat(num, 1)
+n3 = jsPsych.randomization.repeat(num, 1)
+n4 = jsPsych.randomization.repeat(num, 1)
+n5 = jsPsych.randomization.repeat(num, 1)
+//Shufflers for 21 trial blocks
+s1 = jsPsych.randomization.repeat(num2, 1)
+s2 = jsPsych.randomization.repeat(num2, 1)
+s3 = jsPsych.randomization.repeat(num2, 1)
+s4 = jsPsych.randomization.repeat(num2, 1)
+s5 = jsPsych.randomization.repeat(num2, 1)
+
+
+var preload_bw1 = {
+  type: 'preload',
+  message: 'BW Stimuli Loading...',
+  images: [
+          fractal_s777_b25_bw,
+          fractal_s777_b30_bw,
+          fractal_s777_b35_bw,
+          fractal_s777_b40_bw,
+          fractal_s777_b45_bw,
+          fractal_s777_b50_bw,
+          fractal_s777_b55_bw],
+  auto_preload: false // automatically load all files based on the main timeline
+};
+
+var preload_bw2 = {
+  type: 'preload',
+  message: 'BW Stimuli Loading...',
+  images: [
+          fractal_s888_b25_bw,
+          fractal_s888_b30_bw,
+          fractal_s888_b35_bw,
+          fractal_s888_b40_bw,
+          fractal_s888_b45_bw,
+          fractal_s888_b50_bw,
+          fractal_s888_b55_bw],
+  auto_preload: false // automatically load all files based on the main timeline
+};
+
+var preload_bw3 = {
+  type: 'preload',
+  message: 'BW Stimuli Loading...',
+  images: [
+          fractal_s999_b25_bw,
+          fractal_s999_b30_bw,
+          fractal_s999_b35_bw,
+          fractal_s999_b40_bw,
+          fractal_s999_b45_bw,
+          fractal_s999_b50_bw,
+          fractal_s999_b55_bw],
+  auto_preload: false // automatically load all files based on the main timeline
+};
+
+var preload_gs1 = {
+  type: 'preload',
+  message: 'GS Stimuli Loading...',
+  images: [
+          fractal_s777_b25_gs,
+          fractal_s777_b30_gs,
+          fractal_s777_b35_gs,
+          fractal_s777_b40_gs,
+          fractal_s777_b45_gs,
+          fractal_s777_b50_gs,
+          fractal_s777_b55_gs],
+  auto_preload: false // automatically load all files based on the main timeline
+};
+
+var preload_gs2 = {
+  type: 'preload',
+  message: 'GS Stimuli Loading...',
+  images: [
+          fractal_s888_b25_gs,
+          fractal_s888_b30_gs,
+          fractal_s888_b35_gs,
+          fractal_s888_b40_gs,
+          fractal_s888_b45_gs,
+          fractal_s888_b50_gs,
+          fractal_s888_b55_gs],
+  auto_preload: false // automatically load all files based on the main timeline
+};
+
+var preload_gs3 = {
+  type: 'preload',
+  message: 'GS Stimuli Loading...',
+  images: [
+          fractal_s999_b25_gs,
+          fractal_s999_b30_gs,
+          fractal_s999_b35_gs,
+          fractal_s999_b40_gs,
+          fractal_s999_b45_gs,
+          fractal_s999_b50_gs,
+          fractal_s999_b55_gs],
+  auto_preload: false // automatically load all files based on the main timeline
+};
+
+
+function saveData(data){
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'write_data.php'); // 'write_data.php' is the path to the php file described above.
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({filedata: data}));
+}
+
+/*timeline*/
+jsPsych.init({
+//default_iti: 1000,
+  timeline: [//informed_consent,
+             preload_bw1, preload_bw2, preload_bw3,
+             preload_gs1, preload_gs2, preload_gs3,
+             //userID, 
+             fullscreen_enter, ageGender,
+             //blackWhite,
+             //Dynamic Trials bw
+             complexBlock, complexPrompt,
+             dyn_gs[n1[0]], dyn_gs[n1[1]], dyn_gs[n1[2]],  dyn_gs[n1[3]], dyn_gs[n1[4]], dyn_gs[n1[5]], dyn_gs[n1[6]],
+             dyn_gs[n1[7]], dyn_gs[n1[8]], dyn_gs[n1[9]], dyn_gs[n1[10]], dyn_gs[n1[11]], dyn_gs[n1[12]], dyn_gs[n1[13]],
+             dyn_gs[n1[14]], dyn_gs[n1[15]], dyn_gs[n1[16]], dyn_gs[n1[17]], dyn_gs[n1[18]], dyn_gs[n1[19]], dyn_gs[n1[20]],
+             dyn_gs[n1[21]], dyn_gs[n1[22]], dyn_gs[n1[23]], dyn_gs[n1[24]], dyn_gs[n1[25]], dyn_gs[n1[26]], dyn_gs[n1[27]],
+             dyn_gs[n1[28]], dyn_gs[n1[29]], dyn_gs[n1[30]], dyn_gs[n1[31]], dyn_gs[n1[32]], dyn_gs[n1[33]], dyn_gs[n1[34]],
+             dyn_gs[n1[35]], dyn_gs[n1[36]], dyn_gs[n1[37]], dyn_gs[n1[38]], dyn_gs[n1[39]], dyn_gs[n1[40]], dyn_gs[n1[41]],                                     
+             relaxingBlock, relaxingPrompt,
+             dyn_gs[n2[0]], dyn_gs[n2[1]], dyn_gs[n2[2]], dyn_gs[n2[3]], dyn_gs[n2[4]], dyn_gs[n2[5]], dyn_gs[n2[6]],
+             dyn_gs[n2[7]], dyn_gs[n2[8]], dyn_gs[n2[9]], dyn_gs[n2[10]], dyn_gs[n2[11]], dyn_gs[n2[12]], dyn_gs[n2[13]],
+             dyn_gs[n2[14]], dyn_gs[n2[15]], dyn_gs[n2[16]], dyn_gs[n2[17]], dyn_gs[n2[18]], dyn_gs[n2[19]], dyn_gs[n2[20]],
+             dyn_gs[n2[21]], dyn_gs[n2[22]], dyn_gs[n2[23]], dyn_gs[n2[24]], dyn_gs[n2[25]], dyn_gs[n2[26]], dyn_gs[n2[27]],
+             dyn_gs[n2[28]], dyn_gs[n2[29]], dyn_gs[n2[30]], dyn_gs[n2[31]], dyn_gs[n2[32]], dyn_gs[n2[33]], dyn_gs[n2[34]],
+             dyn_gs[n2[35]], dyn_gs[n2[36]], dyn_gs[n2[37]], dyn_gs[n2[38]], dyn_gs[n2[39]], dyn_gs[n2[40]], dyn_gs[n2[41]],
+             naturalBlock, naturalPrompt,
+             dyn_gs[n3[0]], dyn_gs[n3[1]], dyn_gs[n3[2]], dyn_gs[n3[3]], dyn_gs[n3[4]], dyn_gs[n3[5]], dyn_gs[n3[6]],
+             dyn_gs[n3[7]], dyn_gs[n3[8]], dyn_gs[n3[9]], dyn_gs[n3[10]], dyn_gs[n3[11]], dyn_gs[n3[12]], dyn_gs[n3[13]],
+             dyn_gs[n3[14]], dyn_gs[n3[15]], dyn_gs[n3[16]], dyn_gs[n3[17]], dyn_gs[n3[18]], dyn_gs[n3[19]], dyn_gs[n3[20]],             
+             dyn_gs[n3[21]], dyn_gs[n3[22]], dyn_gs[n3[23]], dyn_gs[n3[24]], dyn_gs[n3[25]], dyn_gs[n3[26]], dyn_gs[n3[27]],
+             dyn_gs[n3[28]], dyn_gs[n3[29]], dyn_gs[n3[30]], dyn_gs[n3[31]], dyn_gs[n3[32]], dyn_gs[n3[33]], dyn_gs[n3[34]],
+             dyn_gs[n3[35]], dyn_gs[n3[36]], dyn_gs[n3[37]], dyn_gs[n3[38]], dyn_gs[n3[39]], dyn_gs[n3[40]], dyn_gs[n3[41]],
+             interestBlock, interestPrompt,
+             dyn_gs[n4[0]], dyn_gs[n4[1]], dyn_gs[n4[2]], dyn_gs[n4[3]], dyn_gs[n4[4]], dyn_gs[n4[5]], dyn_gs[n4[6]],
+             dyn_gs[n4[7]], dyn_gs[n4[8]], dyn_gs[n4[9]], dyn_gs[n4[10]], dyn_gs[n4[11]], dyn_gs[n4[12]], dyn_gs[n4[13]],
+             dyn_gs[n4[14]], dyn_gs[n4[15]], dyn_gs[n4[16]], dyn_gs[n4[17]], dyn_gs[n4[18]], dyn_gs[n4[19]], dyn_gs[n4[20]],
+             dyn_gs[n4[21]], dyn_gs[n4[22]], dyn_gs[n4[23]], dyn_gs[n4[24]], dyn_gs[n4[25]], dyn_gs[n4[26]], dyn_gs[n4[27]],
+             dyn_gs[n4[28]], dyn_gs[n4[29]], dyn_gs[n4[30]], dyn_gs[n4[31]], dyn_gs[n4[32]], dyn_gs[n4[33]], dyn_gs[n4[34]],
+             dyn_gs[n4[35]], dyn_gs[n4[36]], dyn_gs[n4[37]], dyn_gs[n4[38]], dyn_gs[n4[39]], dyn_gs[n4[40]], dyn_gs[n4[41]],
+             appealingBlock, appealingPrompt,
+             dyn_gs[n5[0]], dyn_gs[n5[1]], dyn_gs[n5[2]], dyn_gs[n5[3]], dyn_gs[n5[4]], dyn_gs[n5[5]], dyn_gs[n5[6]],
+             dyn_gs[n5[7]], dyn_gs[n5[8]], dyn_gs[n5[9]], dyn_gs[n5[10]], dyn_gs[n5[11]], dyn_gs[n5[12]], dyn_gs[n5[13]],
+             dyn_gs[n5[14]], dyn_gs[n5[15]], dyn_gs[n5[16]], dyn_gs[n5[17]], dyn_gs[n5[18]], dyn_gs[n5[19]], dyn_gs[n5[20]],
+             dyn_gs[n5[21]], dyn_gs[n5[22]], dyn_gs[n5[23]], dyn_gs[n5[24]], dyn_gs[n5[25]], dyn_gs[n5[26]], dyn_gs[n5[27]],
+             dyn_gs[n5[28]], dyn_gs[n5[29]], dyn_gs[n5[30]], dyn_gs[n5[31]], dyn_gs[n5[32]], dyn_gs[n5[33]], dyn_gs[n5[34]],
+             dyn_gs[n5[35]], dyn_gs[n5[36]], dyn_gs[n5[37]], dyn_gs[n5[38]], dyn_gs[n5[39]], dyn_gs[n5[40]], dyn_gs[n5[41]],
+             
+             //Still Trials GS
+             complexBlock_stl, complexPrompt,
+             stl_gs[s1[0]], stl_gs[s1[1]], stl_gs[s1[2]], stl_gs[s1[3]], stl_gs[s1[4]], stl_gs[s1[5]], stl_gs[s1[6]],
+             stl_gs[s1[7]], stl_gs[s1[8]], stl_gs[s1[9]], stl_gs[s1[10]], stl_gs[s1[11]], stl_gs[s1[12]], stl_gs[s1[13]],
+             stl_gs[s1[14]], stl_gs[s1[15]], stl_gs[s1[16]], stl_gs[s1[17]], stl_gs[s1[18]], stl_gs[s1[19]], stl_gs[s1[20]],                                  
+             relaxingBlock_stl, relaxingPrompt,
+             stl_gs[s2[0]], stl_gs[s2[1]], stl_gs[s2[2]], stl_gs[s2[3]], stl_gs[s2[4]], stl_gs[s2[5]], stl_gs[s2[6]],
+             stl_gs[s2[7]], stl_gs[s2[8]], stl_gs[s2[9]], stl_gs[s2[10]], stl_gs[s2[11]], stl_gs[s2[12]], stl_gs[s2[13]],
+             stl_gs[s2[14]], stl_gs[s2[15]], stl_gs[s2[16]], stl_gs[s2[17]], stl_gs[s2[18]], stl_gs[s2[19]], stl_gs[s2[20]],
+             naturalBlock_stl, naturalPrompt,
+             stl_gs[s3[0]], stl_gs[s3[1]], stl_gs[s3[2]], stl_gs[s3[3]], stl_gs[s3[4]], stl_gs[s3[5]], stl_gs[s3[6]],
+             stl_gs[s3[7]], stl_gs[s3[8]], stl_gs[s3[9]], stl_gs[s3[10]], stl_gs[s3[11]], stl_gs[s3[12]], stl_gs[s3[13]],
+             stl_gs[s3[14]], stl_gs[s3[15]], stl_gs[s3[16]], stl_gs[s3[17]], stl_gs[s3[18]], stl_gs[s3[19]], stl_gs[s3[20]],
+             interestBlock_stl, interestPrompt,
+             stl_gs[s4[0]], stl_gs[s4[1]], stl_gs[s4[2]], stl_gs[s4[3]], stl_gs[s4[4]], stl_gs[s4[5]], stl_gs[s4[6]],
+             stl_gs[s4[7]], stl_gs[s4[8]], stl_gs[s4[9]], stl_gs[s4[10]], stl_gs[s4[11]], stl_gs[s4[12]], stl_gs[s4[13]],
+             stl_gs[s4[14]], stl_gs[s4[15]], stl_gs[s4[16]], stl_gs[s4[17]], stl_gs[s4[18]], stl_gs[s4[19]], stl_gs[s4[20]],
+             appealingBlock_stl, appealingPrompt,
+             stl_gs[s5[0]], stl_gs[s5[1]], stl_gs[s5[2]], stl_gs[s5[3]], stl_gs[s5[4]], stl_gs[s5[5]], stl_gs[s5[6]],
+             stl_gs[s5[7]], stl_gs[s5[8]], stl_gs[s5[9]], stl_gs[s5[10]], stl_gs[s5[11]], stl_gs[s5[12]], stl_gs[s5[13]],
+             stl_gs[s5[14]], stl_gs[s5[15]], stl_gs[s5[16]], stl_gs[s5[17]], stl_gs[s5[18]], stl_gs[s5[19]], stl_gs[s5[20]],
+
+             //stretch break
+             leg_stretch,
+             
+             //Dynamic Trials BW
+             dyn_bw[n1[0]], dyn_bw[n1[1]], dyn_bw[n1[2]],  dyn_bw[n1[3]], dyn_bw[n1[4]], dyn_bw[n1[5]], dyn_bw[n1[6]],
+             dyn_bw[n1[7]], dyn_bw[n1[8]], dyn_bw[n1[9]], dyn_bw[n1[10]], dyn_bw[n1[11]], dyn_bw[n1[12]], dyn_bw[n1[13]],
+             dyn_bw[n1[14]], dyn_bw[n1[15]], dyn_bw[n1[16]], dyn_bw[n1[17]], dyn_bw[n1[18]], dyn_bw[n1[19]], dyn_bw[n1[20]],
+             dyn_bw[n1[21]], dyn_bw[n1[22]], dyn_bw[n1[23]], dyn_bw[n1[24]], dyn_bw[n1[25]], dyn_bw[n1[26]], dyn_bw[n1[27]],
+             dyn_bw[n1[28]], dyn_bw[n1[29]], dyn_bw[n1[30]], dyn_bw[n1[31]], dyn_bw[n1[32]], dyn_bw[n1[33]], dyn_bw[n1[34]],
+             dyn_bw[n1[35]], dyn_bw[n1[36]], dyn_bw[n1[37]], dyn_bw[n1[38]], dyn_bw[n1[39]], dyn_bw[n1[40]], dyn_bw[n1[41]],                                     
+             relaxingBlock, relaxingPrompt,
+             dyn_bw[n2[0]], dyn_bw[n2[1]], dyn_bw[n2[2]], dyn_bw[n2[3]], dyn_bw[n2[4]], dyn_bw[n2[5]], dyn_bw[n2[6]],
+             dyn_bw[n2[7]], dyn_bw[n2[8]], dyn_bw[n2[9]], dyn_bw[n2[10]], dyn_bw[n2[11]], dyn_bw[n2[12]], dyn_bw[n2[13]],
+             dyn_bw[n2[14]], dyn_bw[n2[15]], dyn_bw[n2[16]], dyn_bw[n2[17]], dyn_bw[n2[18]], dyn_bw[n2[19]], dyn_bw[n2[20]],
+             dyn_bw[n2[21]], dyn_bw[n2[22]], dyn_bw[n2[23]], dyn_bw[n2[24]], dyn_bw[n2[25]], dyn_bw[n2[26]], dyn_bw[n2[27]],
+             dyn_bw[n2[28]], dyn_bw[n2[29]], dyn_bw[n2[30]], dyn_bw[n2[31]], dyn_bw[n2[32]], dyn_bw[n2[33]], dyn_bw[n2[34]],
+             dyn_bw[n2[35]], dyn_bw[n2[36]], dyn_bw[n2[37]], dyn_bw[n2[38]], dyn_bw[n2[39]], dyn_bw[n2[40]], dyn_bw[n2[41]],
+             naturalBlock, naturalPrompt,
+             dyn_bw[n3[0]], dyn_bw[n3[1]], dyn_bw[n3[2]], dyn_bw[n3[3]], dyn_bw[n3[4]], dyn_bw[n3[5]], dyn_bw[n3[6]],
+             dyn_bw[n3[7]], dyn_bw[n3[8]], dyn_bw[n3[9]], dyn_bw[n3[10]], dyn_bw[n3[11]], dyn_bw[n3[12]], dyn_bw[n3[13]],
+             dyn_bw[n3[14]], dyn_bw[n3[15]], dyn_bw[n3[16]], dyn_bw[n3[17]], dyn_bw[n3[18]], dyn_bw[n3[19]], dyn_bw[n3[20]],             
+             dyn_bw[n3[21]], dyn_bw[n3[22]], dyn_bw[n3[23]], dyn_bw[n3[24]], dyn_bw[n3[25]], dyn_bw[n3[26]], dyn_bw[n3[27]],
+             dyn_bw[n3[28]], dyn_bw[n3[29]], dyn_bw[n3[30]], dyn_bw[n3[31]], dyn_bw[n3[32]], dyn_bw[n3[33]], dyn_bw[n3[34]],
+             dyn_bw[n3[35]], dyn_bw[n3[36]], dyn_bw[n3[37]], dyn_bw[n3[38]], dyn_bw[n3[39]], dyn_bw[n3[40]], dyn_bw[n3[41]],
+             interestBlock, interestPrompt,
+             dyn_bw[n4[0]], dyn_bw[n4[1]], dyn_bw[n4[2]], dyn_bw[n4[3]], dyn_bw[n4[4]], dyn_bw[n4[5]], dyn_bw[n4[6]],
+             dyn_bw[n4[7]], dyn_bw[n4[8]], dyn_bw[n4[9]], dyn_bw[n4[10]], dyn_bw[n4[11]], dyn_bw[n4[12]], dyn_bw[n4[13]],
+             dyn_bw[n4[14]], dyn_bw[n4[15]], dyn_bw[n4[16]], dyn_bw[n4[17]], dyn_bw[n4[18]], dyn_bw[n4[19]], dyn_bw[n4[20]],
+             dyn_bw[n4[21]], dyn_bw[n4[22]], dyn_bw[n4[23]], dyn_bw[n4[24]], dyn_bw[n4[25]], dyn_bw[n4[26]], dyn_bw[n4[27]],
+             dyn_bw[n4[28]], dyn_bw[n4[29]], dyn_bw[n4[30]], dyn_bw[n4[31]], dyn_bw[n4[32]], dyn_bw[n4[33]], dyn_bw[n4[34]],
+             dyn_bw[n4[35]], dyn_bw[n4[36]], dyn_bw[n4[37]], dyn_bw[n4[38]], dyn_bw[n4[39]], dyn_bw[n4[40]], dyn_bw[n4[41]],
+             appealingBlock, appealingPrompt,
+             dyn_bw[n5[0]], dyn_bw[n5[1]], dyn_bw[n5[2]], dyn_bw[n5[3]], dyn_bw[n5[4]], dyn_bw[n5[5]], dyn_bw[n5[6]],
+             dyn_bw[n5[7]], dyn_bw[n5[8]], dyn_bw[n5[9]], dyn_bw[n5[10]], dyn_bw[n5[11]], dyn_bw[n5[12]], dyn_bw[n5[13]],
+             dyn_bw[n5[14]], dyn_bw[n5[15]], dyn_bw[n5[16]], dyn_bw[n5[17]], dyn_bw[n5[18]], dyn_bw[n5[19]], dyn_bw[n5[20]],
+             dyn_bw[n5[21]], dyn_bw[n5[22]], dyn_bw[n5[23]], dyn_bw[n5[24]], dyn_bw[n5[25]], dyn_bw[n5[26]], dyn_bw[n5[27]],
+             dyn_bw[n5[28]], dyn_bw[n5[29]], dyn_bw[n5[30]], dyn_bw[n5[31]], dyn_bw[n5[32]], dyn_bw[n5[33]], dyn_bw[n5[34]],
+             dyn_bw[n5[35]], dyn_bw[n5[36]], dyn_bw[n5[37]], dyn_bw[n5[38]], dyn_bw[n5[39]], dyn_bw[n5[40]], dyn_bw[n5[41]],
+             
+             //Still Trials BW
+             complexBlock_stl, complexPrompt,
+             stl_bw[s1[0]], stl_bw[s1[1]], stl_bw[s1[2]], stl_bw[s1[3]], stl_bw[s1[4]], stl_bw[s1[5]], stl_bw[s1[6]],
+             stl_bw[s1[7]], stl_bw[s1[8]], stl_bw[s1[9]], stl_bw[s1[10]], stl_bw[s1[11]], stl_bw[s1[12]], stl_bw[s1[13]],
+             stl_bw[s1[14]], stl_bw[s1[15]], stl_bw[s1[16]], stl_bw[s1[17]], stl_bw[s1[18]], stl_bw[s1[19]], stl_bw[s1[20]],                                  
+             relaxingBlock_stl, relaxingPrompt,
+             stl_bw[s2[0]], stl_bw[s2[1]], stl_bw[s2[2]], stl_bw[s2[3]], stl_bw[s2[4]], stl_bw[s2[5]], stl_bw[s2[6]],
+             stl_bw[s2[7]], stl_bw[s2[8]], stl_bw[s2[9]], stl_bw[s2[10]], stl_bw[s2[11]], stl_bw[s2[12]], stl_bw[s2[13]],
+             stl_bw[s2[14]], stl_bw[s2[15]], stl_bw[s2[16]], stl_bw[s2[17]], stl_bw[s2[18]], stl_bw[s2[19]], stl_bw[s2[20]],
+             naturalBlock_stl, naturalPrompt,
+             stl_bw[s3[0]], stl_bw[s3[1]], stl_bw[s3[2]], stl_bw[s3[3]], stl_bw[s3[4]], stl_bw[s3[5]], stl_bw[s3[6]],
+             stl_bw[s3[7]], stl_bw[s3[8]], stl_bw[s3[9]], stl_bw[s3[10]], stl_bw[s3[11]], stl_bw[s3[12]], stl_bw[s3[13]],
+             stl_bw[s3[14]], stl_bw[s3[15]], stl_bw[s3[16]], stl_bw[s3[17]], stl_bw[s3[18]], stl_bw[s3[19]], stl_bw[s3[20]],
+             interestBlock_stl, interestPrompt,
+             stl_bw[s4[0]], stl_bw[s4[1]], stl_bw[s4[2]], stl_bw[s4[3]], stl_bw[s4[4]], stl_bw[s4[5]], stl_bw[s4[6]],
+             stl_bw[s4[7]], stl_bw[s4[8]], stl_bw[s4[9]], stl_bw[s4[10]], stl_bw[s4[11]], stl_bw[s4[12]], stl_bw[s4[13]],
+             stl_bw[s4[14]], stl_bw[s4[15]], stl_bw[s4[16]], stl_bw[s4[17]], stl_bw[s4[18]], stl_bw[s4[19]], stl_bw[s4[20]],
+             appealingBlock_stl, appealingPrompt,
+             stl_bw[s5[0]], stl_bw[s5[1]], stl_bw[s5[2]], stl_bw[s5[3]], stl_bw[s5[4]], stl_bw[s5[5]], stl_bw[s5[6]],
+             stl_bw[s5[7]], stl_bw[s5[8]], stl_bw[s5[9]], stl_bw[s5[10]], stl_bw[s5[11]], stl_bw[s5[12]], stl_bw[s5[13]],
+             stl_bw[s5[14]], stl_bw[s5[15]], stl_bw[s5[16]], stl_bw[s5[17]], stl_bw[s5[18]], stl_bw[s5[19]], stl_bw[s5[20]],
+             debrief, thanks, fullscreen_exit, 
+             //pavlovia_finish
+             ],
+  override_safe_mode: true,
+  on_finish: function() { 
+// select all trials
+  var all_data = jsPsych.data.get();
+//jsPsych.data.displayData('csv')
+  saveData(all_data.csv()); 
+  }
+});
+
+
+
+</script>
+
+</html>
+
+
